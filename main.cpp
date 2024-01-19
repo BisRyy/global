@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include <unordered_map>
+#include <fstream>
 
 using namespace std;
 
@@ -15,7 +17,12 @@ enum class TokenType {
     MODULO,
     EOF_TOKEN,
     LPAREN,
-    RPAREN
+    RPAREN,
+    VAR,
+    CONST,
+    DECLARE,
+    IDENTIFIER,
+    PRINT
 };
 
 // Token structure
@@ -64,7 +71,13 @@ public:
             case ')':
                 currentPos++;
                 return { TokenType::RPAREN, ")" };
+            case '=':
+                currentPos++;
+                return { TokenType::DECLARE, "=" };
+        }
 
+        if (isalpha(source[currentPos])) {
+            return getIdentifierToken();
         }
 
         // Invalid token
@@ -81,9 +94,28 @@ private:
         return { TokenType::INTEGER, value };
     }
 
+    Token getIdentifierToken() {
+        string value;
+        while (currentPos < source.length() && (isalnum(source[currentPos]) || source[currentPos] == '_')) {
+            value += source[currentPos];
+            currentPos++;
+        }
+
+        if (value == "var") {
+            return { TokenType::VAR, value };
+        } else if (value == "print") {
+            return { TokenType::PRINT, value };
+        }
+
+        return { TokenType::IDENTIFIER, value };
+    }
+
     string source;
     size_t currentPos;
 };
+
+// Variable symbol table
+unordered_map<string, int> variables;
 
 // Parser: Analyzes the syntax and performs BODMAS operations
 class Parser {
@@ -96,12 +128,78 @@ public:
             // Empty program
             return 0;
         }
-
-        int result = parseExpression(token);
+        int result = parseStatement(token);
         return result;
     }
 
 private:
+    int parseStatement(Token& token) {
+        if (token.type == TokenType::PRINT) {
+            token = lexer.getNextToken();  // Consume "print"
+            int result = parseExpression(token);
+            cout << result << endl;
+            return result;
+        } else if (token.type == TokenType::VAR) {
+            token = lexer.getNextToken();  // Consume a variable name
+            if (token.type == TokenType::IDENTIFIER) {
+                string variableName = token.value;
+                token = lexer.getNextToken();  // Consume "="
+
+                if (token.type == TokenType::DECLARE) {
+                    token = lexer.getNextToken();  // Consume a value
+
+                    // check if the variable is already declared
+                    if (variables.find(variableName) != variables.end()) {
+                        cerr << "Error: Variable '" << variableName << "' already declared" << endl;
+                        return 0;
+                    }
+
+                    int value = parseExpression(token);
+                    variables[variableName] = value;
+                } else {
+                    cerr << "Error: Invalid variable declaration" << endl;
+                    return 0;
+                }
+            } else {
+                cerr << "Error: Invalid variable declaration" << endl;
+                return 0;
+            }
+        } else if (token.type == TokenType::IDENTIFIER) {
+            // Variable assignment
+            string variableName = token.value;
+            token = lexer.getNextToken();  // Consume '='
+
+            if (token.type == TokenType::DECLARE) {
+                token = lexer.getNextToken();  
+
+                // check if the variable is already declared
+                if (variables.find(variableName) == variables.end()) {
+                    cerr << "Error: Variable '" << variableName << "' not declared" << endl;
+                    return 0;
+                }
+
+                int value = parseExpression(token);
+                variables[variableName] = value;
+
+            } else if (token.type == TokenType::PLUS || token.type == TokenType::MINUS || token.type == TokenType::MULTIPLY || token.type == TokenType::DIVIDE || token.type == TokenType::MODULO) {
+                token = lexer.getNextToken();  // Consume '='
+                int value = parseExpression(token);
+                return value + variables[variableName];
+
+            }
+            else {
+                cerr << "Error: Invalid variable assignment" << endl;
+                return 0;
+            }
+
+        } else {
+            // Regular expression evaluation
+            return parseExpression(token);
+        }
+
+        return 0;
+    }
+
     int parseExpression(Token& token) {
         int result = parseTerm(token);
 
@@ -152,8 +250,19 @@ private:
     int parseFactor(Token& token) {
         if (token.type == TokenType::INTEGER) {
             int value = stoi(token.value);
-            token = lexer.getNextToken();  // Consume integer
+            token = lexer.getNextToken();  // Consume variable
             return value;
+        } else if (token.type == TokenType::IDENTIFIER) {
+            string variableName = token.value;
+            token = lexer.getNextToken();  // Consume variable
+            
+            if (variables.find(variableName) != variables.end()) {
+                return variables[variableName];
+            } else {
+                cerr << "Error: Variable '" << variableName << "' not found" << endl;
+                return 0;
+            }
+
         } else if (token.type == TokenType::LPAREN) {
             token = lexer.getNextToken();  // Consume '('
             int result = parseExpression(token);
@@ -167,26 +276,33 @@ private:
         }
 
         // Invalid factor
-        cerr << "Error: Invalid factor" << endl;
+        cerr << "Error: Invalid factor" << token.value << endl;
         return 0;
     }
 
     Lexer& lexer;
 };
 
-int main() {
-    while (true) {
-        string sourceCode;
-        cout << "Input: ";
-        cin >> sourceCode;
-
-        Lexer lexer(sourceCode);
-        Parser parser(lexer);
-
-        int result = parser.parse();
-
-        cout << "Result: " << result << endl << endl;
+int main( int argc, char* argv[] ) { // take file name as parameter
+    if (argc != 2) {
+        cerr << "Usage: " << argv[0] << " <filename>" << endl;
+        return 1;
     }
+
+    ifstream file(argv[1]);
+    if (!file.is_open()) {
+        cerr << "Error: Unable to open file '" << argv[1] << "'" << endl;
+        return 1;
+    }
+
+    string source;
+    string line;
+    while (getline(file, line)) {
+        Lexer lexer(line);
+        Parser parser(lexer);
+        int result = parser.parse();
+    }
+    
 
     return 0;
 }
