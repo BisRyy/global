@@ -62,6 +62,13 @@ public:
                 return { TokenType::MULTIPLY, "*" };
             case '/':
                 currentPos++;
+                if (source[currentPos] == '/') {
+                    currentPos++;
+                    while (currentPos < source.length() && source[currentPos] != '\n') {
+                        currentPos++;
+                    }
+                    return getNextToken();
+                }
                 return { TokenType::DIVIDE, "/" };
             case '%':
                 currentPos++;
