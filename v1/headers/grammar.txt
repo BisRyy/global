@@ -1,6 +1,30 @@
 program = { statement }
 
-statement = expression | if | while | assignment | print | declaration | for
+statement = expression | print
+
+print = 'print', '(', (expression ), ')'
+
+digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+
+number = digit, { digit }
+
+expression = term, { ('+' | '-'), term }
+
+term = factor, { ('*' | '/'), factor }
+
+factor = number | '(', expression, ')'
+
+comment = '//', { character }, '\n'
+
+
+
+
+
+// Grammar:
+
+// program = { statement }
+
+// statement = expression | if | while | assignment | print | declaration | for
 
 // print = 'print', '(', expression, ')' | 'print', '(', string, ')'
 
@@ -32,13 +56,13 @@ statement = expression | if | while | assignment | print | declaration | for
 
 // factor = number | identifier | boolean | '(', expression, ')' | float
 
-block = '{', { statement }, '}' | statement 
+// block = '{', { statement }, '}' | statement 
 
-if =  'if', '(', expression, ')', block, [ 'else', block ] 
+// if =  'if', '(', expression, ')', block, [ 'else', block ] 
 
-while = 'while', '(', expression, ')', block 
+// while = 'while', '(', expression, ')', block 
 
-for = 'for', '(', [ assignment ], ';', [ expression ], ';', [ assignment ], ')', block | 'for', '(', [ declaration ], ';', [ expression ], ';', [ assignment ], ')', block
+// for = 'for', '(', [ assignment ], ';', [ expression ], ';', [ assignment ], ')', block | 'for', '(', [ declaration ], ';', [ expression ], ';', [ assignment ], ')', block
 
 // assignment = identifier, '=', expression 
 

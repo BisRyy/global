@@ -32,8 +32,14 @@ enum TokenType {
     PRINT,
     LEFT_PAREN,
     RIGHT_PAREN,
+    PAREN,
     LEFT_BRACE,
     RIGHT_BRACE,
+    SEMICOLON,
+    COLON,
+    COMMA,
+    DOT,
+    INVALID,
     END_OF_FILE
 };
 
