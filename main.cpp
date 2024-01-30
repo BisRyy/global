@@ -22,7 +22,8 @@ enum class TokenType {
     CONST,
     DECLARE,
     IDENTIFIER,
-    PRINT
+    PRINT,
+    STRING
 };
 
 // Token structure
@@ -80,6 +81,10 @@ public:
             return getIdentifierToken();
         }
 
+        if (source[currentPos] == '"') {
+            return getStringToken();
+        }
+
         // Invalid token
         return { TokenType::EOF_TOKEN, "" };
     }
@@ -93,6 +98,17 @@ private:
         }
         return { TokenType::INTEGER, value };
     }
+
+    Token getStringToken() {
+        string value;
+        currentPos++;
+        while (currentPos < source.length() && source[currentPos] != '"') {
+            value += source[currentPos];
+            currentPos++;
+        }
+        currentPos++;
+        return { TokenType::STRING, value };
+    };
 
     Token getIdentifierToken() {
         string value;
@@ -134,37 +150,73 @@ public:
 
 private:
     int parseStatement(Token& token) {
-        if (token.type == TokenType::PRINT) {
-            token = lexer.getNextToken();  // Consume "print"
-            int result = parseExpression(token);
-            cout << result << endl;
-            return result;
-        } else if (token.type == TokenType::VAR) {
-            token = lexer.getNextToken();  // Consume a variable name
-            if (token.type == TokenType::IDENTIFIER) {
-                string variableName = token.value;
-                token = lexer.getNextToken();  // Consume "="
-
-                if (token.type == TokenType::DECLARE) {
-                    token = lexer.getNextToken();  // Consume a value
-
-                    // check if the variable is already declared
-                    if (variables.find(variableName) != variables.end()) {
-                        cerr << "Error: Variable '" << variableName << "' already declared" << endl;
+        if (token.type == TokenType::PRINT){
+            token = lexer.getNextToken();
+            if (token.type == TokenType::LPAREN){
+                token = lexer.getNextToken();
+                if (token.type == TokenType::STRING){
+                    string value = token.value;
+                    token = lexer.getNextToken();
+                    if (token.type == TokenType::RPAREN){
+                        cout << value << endl;
+                        token = lexer.getNextToken();
+                        return 0;
+                    } else {
+                        cerr << "Error: Invalid print statement" << endl;
                         return 0;
                     }
+                } else {
+                    int value = parseExpression(token);
+                    if (token.type == TokenType::RPAREN){
+                        cout << value << endl;
+                        token = lexer.getNextToken();
+                        return 0;
+                    } else {
+                        cerr << "Error: Invalid print statement" << endl;
+                        return 0;
+                    }
+                }
+            } else {
+                if (token.type == TokenType::STRING){
+                    string value = token.value;
+                    token = lexer.getNextToken();
+                    cout << value << endl;
+                    return 0;
+                } else {
+                    int value = parseExpression(token);
+                    cout << "PRINT: " << value << endl;
+                    token = lexer.getNextToken();
+                }
+            }
+        } else if (token.type == TokenType::VAR) {
+            token = lexer.getNextToken();
+            if (token.type == TokenType::IDENTIFIER) {
+                // Variable assignment
+                string variableName = token.value;
+                token = lexer.getNextToken();  // Consume '='
+
+                if (token.type == TokenType::DECLARE) {
+                    token = lexer.getNextToken();  
 
                     int value = parseExpression(token);
                     variables[variableName] = value;
-                } else {
-                    cerr << "Error: Invalid variable declaration" << endl;
+
+                } else if (token.type == TokenType::PLUS || token.type == TokenType::MINUS || token.type == TokenType::MULTIPLY || token.type == TokenType::DIVIDE || token.type == TokenType::MODULO) {
+                    token = lexer.getNextToken();  // Consume '='
+                    int value = parseExpression(token);
+                    return value + variables[variableName];
+
+                }
+                else {
+                    cerr << "Error: Invalid variable assignment" << endl;
                     return 0;
                 }
+
             } else {
-                cerr << "Error: Invalid variable declaration" << endl;
-                return 0;
+                // Regular expression evaluation
+                return parseExpression(token);
             }
-        } else if (token.type == TokenType::IDENTIFIER) {
+        }else if (token.type == TokenType::IDENTIFIER) {
             // Variable assignment
             string variableName = token.value;
             token = lexer.getNextToken();  // Consume '='
@@ -172,9 +224,9 @@ private:
             if (token.type == TokenType::DECLARE) {
                 token = lexer.getNextToken();  
 
-                // check if the variable is already declared
+                // check if variable is not declared
                 if (variables.find(variableName) == variables.end()) {
-                    cerr << "Error: Variable '" << variableName << "' not declared" << endl;
+                    cerr << "Error: Variable " << variableName << " is not declared" << endl;
                     return 0;
                 }
 
