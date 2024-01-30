@@ -1,8 +1,3 @@
-//
-//  printToken.cpp
-//  Lexical Analyzer
-//
-
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
@@ -100,8 +95,23 @@ void printToken(Token currentToken){
         case TokenType::END_OF_FILE:
             cout << setw(20) << left << "END_OF_FILE" << currentToken.value << endl;
             break;
+        case TokenType::SEMICOLON:
+            cout << setw(20) << left << "SEMICOLON" << currentToken.value << endl;
+            break;
+        case TokenType::COLON:
+            cout << setw(20) << left << "COLON" << currentToken.value << endl;
+            break;
+        case TokenType::COMMA:
+            cout << setw(20) << left << "COMMA" << currentToken.value << endl;
+            break;
+        case TokenType::DOT:
+            cout << setw(20) << left << "DOT" << currentToken.value << endl;
+            break;
         default:
-            cout << setw(20) << left << "INVALID TOKEN" << endl;
+            cerr << "\033[1;31m";
+            cerr << setw(20) << left << "INVALID TOKEN DETECTED: ";
+            cerr << "\033[0m";
+            cerr << currentToken.value << endl;
             break;
     }
 }
