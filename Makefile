@@ -1,6 +1,6 @@
 main: clean lexer.o parser.o printToken.o
 		g++ -o global lexer.o parser.o printToken.o main.cpp
-		./global tests/test1
+		./global tests/test.c
 
 lexer: lexer.o printToken.o
 		g++ -o lexer lexer.o printToken.o
