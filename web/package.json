@@ -1,0 +1,27 @@
+{
+  "name": "global",
+  "version": "1.0.0",
+  "description": "The compiler you always wanted.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BisRyy/global.git"
+  },
+  "keywords": [
+    "compiler"
+  ],
+  "author": "BisRyy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BisRyy/global/issues"
+  },
+  "homepage": "https://github.com/BisRyy/global#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}

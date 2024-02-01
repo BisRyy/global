@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Global Compiler</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Global Compiler</h1>
+    <p>
+      Global is a versatile and globalized compiler designed to understand
+      various language syntaxes.
+    </p>
+    <p>
+      Whether you are working with C++, Java, Python, or other programming
+      languages, Global Compiler aims to provide a unified and seamless
+      compilation experience.
+    </p>
+    <br />
+
+    <label for="codeInput">Paste your code here:</label>
+    <textarea
+      id="codeInput"
+      rows="10"
+      placeholder="Enter your code here..."
+    ></textarea>
+
+    <label for="fileInput"> or Upload your file:</label>
+    <input type="file" id="fileInput" />
+
+    <button id="executeButton" onclick="executeCode()">Execute Code</button>
+
+    <div id="result">
+      <h2>Execution Result</h2>
+      <pre id="output"></pre>
+    </div>
+
+    <!-- error dropdown -->
+    <details>
+      <summary>Errors</summary>
+      <pre id="error"></pre>
+    </details>
+
+    <footer>
+        <p>Visit our GitHub repository: <a href="https://github.com/BisRyy/global" target="_blank">Global Compiler Project on GitHub</a></p>
+    </footer>
+
+    <script>
+      function executeCode() {
+        const codeInput = document.getElementById("codeInput");
+        const fileInput = document.getElementById("fileInput");
+
+        // Check if either code or file is provided
+        if (codeInput.value === "" && fileInput.files.length === 0) {
+          alert("Please enter code or upload a file.");
+          return;
+        }
+
+        let userCode;
+
+        if (fileInput.files.length > 0) {
+          // Read content from the selected file
+          const selectedFile = fileInput.files[0];
+          const reader = new FileReader();
+
+          reader.onload = function (event) {
+            userCode = event.target.result;
+            sendRequest(userCode);
+          };
+
+          reader.readAsText(selectedFile);
+        } else {
+          // Use code from the textarea
+          userCode = codeInput.value;
+          sendRequest(userCode);
+        }
+      }
+
+      function sendRequest(userCode) {
+        fetch("/run", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code: userCode }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const outputElement = document.getElementById("output");
+            const error = document.getElementById("error");
+            outputElement.textContent = data.result.stdout || "No output";
+            error.textContent = data.result.stderr || "No error";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
