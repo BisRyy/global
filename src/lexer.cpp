@@ -249,6 +249,9 @@ Token Lexer::getIdentifierToken()
     {
         return {TokenType::BOOLEAN, value};
     }
+       if (value == "System" || value == "out" || value == "println") {
+        return { TokenType::JAVA_PRINT, value };
+    }
     return {TokenType::IDENTIFIER, value};
 }
 
