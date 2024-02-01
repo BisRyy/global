@@ -90,48 +90,7 @@ int Parser::parseStatement()
             }
         }
     }
-    else   if (token.type == TokenType::JAVA_PRINT){
-        token = lexer.getNextToken();
-        if (token.value == "out") {
-            token = lexer.getNextToken();
-            if (token.value == "println") {
-                token = lexer.getNextToken();
-                if (token.type == TokenType::LEFT_PAREN){
-                    token = lexer.getNextToken();
-                    if (token.type == TokenType::STRING){
-                        string value = token.value;
-                        token = lexer.getNextToken();
-                        if (token.type == TokenType::RIGHT_PAREN){
-                            cout << "PRINT: " << value << endl;
-                            token = lexer.getNextToken();
-                            if (token.type == TokenType::SEMICOLON){
-                                token = lexer.getNextToken();
-                                return 0;
-                            } else {
-                                // cerr << "Error: Missing semicolon" << endl;
-                                return 0;
-                            }
-                        } else {
-                            // cerr << "Error: Missing closing parenthesis" << endl;
-                            return 0;
-                        }
-                    } else {
-                        // cerr << "Error: Invalid print statement" << endl;
-                        return 0;
-                    }
-                } else {
-                    // cerr << "Error: Missing opening parenthesis" << endl;
-                    return 0;
-                }
-            } else {
-                // cerr << "Error: Invalid print statement" << endl;
-                return 0;
-            }
-        } else {
-            // cerr << "Error: Invalid print statement" << endl;
-            return 0;
-        }
-    }
+
     // Implementation for Var Statement
     else if (token.type == TokenType::VAR)
     {

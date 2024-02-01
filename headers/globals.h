@@ -5,7 +5,6 @@
 using namespace std;
 
 enum TokenType {
-    JAVA_PRINT,
     NUMBER, 
     FLOAT,
     BOOLEAN,
