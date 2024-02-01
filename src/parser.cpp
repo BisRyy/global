@@ -91,6 +91,7 @@ int Parser::parseStatement()
             }
         }
     }
+
     // Implementation for Var Statement
     else if (token.type == TokenType::VAR)
     {

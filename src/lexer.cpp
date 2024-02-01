@@ -237,7 +237,7 @@ Token Lexer::getIdentifierToken()
     {
         return {TokenType::VAR, value};
     }
-    if (value == "print" || value == "println" || value == "println!" || value == "printf" || value == "echo" || value == "cout" || value == "log" || value == "console.log")
+    if (value == "print" || value == "println" || value == "println!" || value == "printf" || value == "echo" || value == "cout" || value == "log" || value == "console.log"  || value == "System.out.println") 
     {
         return {TokenType::PRINT, value};
     }
