@@ -52,7 +52,7 @@ int Parser::parseStatement(){
                 }
             }
         } else {
-                if (token.type == TokenType::STRING){
+            if (token.type == TokenType::STRING){
                 string value = token.value;
                 cout << "PRINT: " << value << endl;
                 token = lexer.getNextToken();
@@ -104,10 +104,47 @@ int Parser::parseStatement(){
             // cerr << "Error: Invalid variable assignment" << endl;
             return 0;
         }
+    } else if (token.type == TokenType::IF){
+        token = lexer.getNextToken();
+        if (token.type == TokenType::LEFT_PAREN){
+            token = lexer.getNextToken();
+            int value = parseExpression();
+            if (token.type == TokenType::RIGHT_PAREN){
+                token = lexer.getNextToken();
+                if (value){
+                    parseStatement();
+                } else {
+                    while (token.type != TokenType::END_OF_FILE && token.type != TokenType::ELSE){
+                        token = lexer.getNextToken();
+                    }
+                    if (token.type == TokenType::ELSE){
+                        token = lexer.getNextToken();
+                        parseStatement();
+                    }
+                }
+            } else {
+                // cerr << "Error: Invalid if statement" << endl;
+                return 0;
+            }
+        } else {
+            int value = parseExpression();
+            if (value){
+                parseStatement();
+            } else {
+                while (token.type != TokenType::END_OF_FILE && token.type != TokenType::ELSE){
+                    token = lexer.getNextToken();
+                }
+                if (token.type == TokenType::ELSE){
+                    token = lexer.getNextToken();
+                    parseStatement();
+                }
+            }
+            return 0;
+        }
     } else {
         // cerr << "Error: Invalid statement" << endl;
         return 0;
-    
+
     }
     return 0;
 }
@@ -224,9 +261,9 @@ int Parser::parseFactor(){
         token = lexer.getNextToken();
         return value;
     } else if (token.type == TokenType::STRING){
-        
+
     }
-        else if (token.type == TokenType::LEFT_PAREN){
+    else if (token.type == TokenType::LEFT_PAREN){
         token = lexer.getNextToken();
         int value = parseExpression();
         if (token.type == TokenType::RIGHT_PAREN){
@@ -269,4 +306,3 @@ int Parser::parseFactor(){
 
 //     return 0;
 // }
-
