@@ -55,6 +55,108 @@ $ ./global test.php
 ...
 
 ```
+## Language Features
+- [x] print statement 
+```
+print("Hello World")
+```
+- [x] Variables
+    - [x] Variable Declaration
+    ```
+    var num = 12
+    ```
+    - [x] Variable Assignment
+    ```
+    num = 21
+    ```
+- [x] Data Types
+    - [x] Integer
+    ```cpp
+    int num = 21
+    ```
+    - [x] String
+    ```python
+    print("This is string.")
+    ```
+    - [x] Boolean
+    ```js
+    let isTrue = true
+    ```
+    - [ ] Float
+    ```rust
+    num = 2.34
+    ```
+- [x] Operators
+    - [x] Arithmetic ( +, -, *, /, % )
+    ```c
+    int x = 4;
+    int y = 6;
+    int z = 8;
+
+    x = y + z;
+    y = x + z;
+    z = x + y;
+
+    int a = z + y - (x % y) + (x * z) + (y / 2) * (x - y * z);
+    printf(a + x + y + z); // prints -7938
+
+    ```
+    - [x] Relational ( <, >, <=, >=, ==, != )
+    ```php
+    $x = 1;
+    $y = 2;
+
+    echo $x < $y; // prints 1
+    echo $x > $y; // prints 0
+    echo $x <= $y; // prints 1
+    echo $x >= $y; // prints 0
+    echo $x == $y; // prints 0
+    echo $x != $y; // prints 1
+    ```
+    - [x] Logical ( &&, ||, ! )
+    ```cpp
+    int x = 1;
+    int y = 2;
+
+    cout << (x && y) << endl; // prints 1
+    cout << (x || y) << endl; // prints 1
+    cout << !x << endl; // prints 0
+    ```
+    - [x] Assignment  ( = )
+    ```python
+    x = 1
+    y = 2 + x
+    z = 3 * y
+
+    print(z) // prints 9
+    ```
+
+- [x] Comment ( //, #)
+    ```c
+    // This is a comment
+    ```
+    ```python
+    # This is also a comment
+    ```
+- [x] Conditional Statements
+    - [x] if
+    - [x] else
+    ```js
+    x = 1
+
+    if x < 0 console.log("x is negative."); else console.log("x is positive") //    prints x is negative.
+
+    if x % 2 console.log("x is odd"); else console.log("x is even") // prints x is odd
+
+    ```
+- [ ] Loops
+    - [ ] for
+    - [ ] while
+    - [ ] do while
+- [ ] Functions
+- [ ] Arrays
+- [ ] Classes
+- [ ] Structs
 
 
 ## Languages Supported
