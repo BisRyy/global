@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
 
-int main() {
+int main()
+{
     int x = 4;
     int y = 6;
     int z = 8;
@@ -16,7 +17,7 @@ int main() {
 
     cout << (a + x + y + z) << endl; // prints -7938
 
-    cout << (x + y) << endl;  // prints 36
+    cout << (x + y) << endl; // prints 36
 
     int result = 2 * (x + y);
 
