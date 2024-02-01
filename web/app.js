@@ -15,7 +15,7 @@ app.post('/run', async (req, res) => {
     const userCode = req.body.code;
 
     // path to compiled C++ binary
-    const globalPath = "./global";
+    const globalPath = path.join(__dirname, 'global');
 
     try {
         // Create a temporary file to store user code
