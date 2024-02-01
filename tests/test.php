@@ -33,3 +33,8 @@ $result = $a * $b;
 echo $result; // prints 8
 
 echo "string";
+
+// one liner if statement
+$test1 = 10;
+$test2 = 20;
+if($test1 + $test2 >= 20) echo "It's True!" else echo "It's not true!";
