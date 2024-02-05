@@ -11,7 +11,7 @@ using namespace std;
 void printToken(Token currentToken);
 
 // Constructor for Lexer Class, Initializes Source Code and Current Position
-Lexer::Lexer(const std::string &source) : source(source), currentPos(0) {}
+Lexer::Lexer(const std::string &source) : source(source), currentPos(0), line(1), column(0) {}
 
 // Get Next Token
 Token Lexer::getNextToken()
@@ -20,13 +20,22 @@ Token Lexer::getNextToken()
     // Skip Whitespace and Layout Characters
     while (currentPos < source.length() && isLayout(source[currentPos]))
     {
+        if (source[currentPos] == '\n')
+        {
+            line++;
+            column = 0;
+        }
+        else
+        {
+            column++;
+        }
         currentPos++;
     }
 
     // Checks End of Source Code
     if (currentPos >= source.length())
     {
-        return {TokenType::END_OF_FILE, ""};
+        return {TokenType::END_OF_FILE, "", line, column};
     }
 
     // Tokenize Numeric Literals
@@ -39,126 +48,156 @@ Token Lexer::getNextToken()
     switch (source[currentPos])
     {
     case '+':
+        column++;
         currentPos++;
-        return {TokenType::PLUS, "+"};
+        return {TokenType::PLUS, "+", line, column};
     case '-':
+        column++;
         currentPos++;
-        return {TokenType::MINUS, "-"};
+        return {TokenType::MINUS, "-", line, column};
     case '*':
+        column++;
         currentPos++;
-        return {TokenType::MULTIPLY, "*"};
+        return {TokenType::MULTIPLY, "*", line, column};
     case '/':
+        column++;
         currentPos++;
 
         // Handle Single Line Comments
         if (source[currentPos] == '/')
         {
+            column++;
             currentPos++;
             while (currentPos < source.length() && source[currentPos] != '\n')
             {
+                column++;
                 currentPos++;
             }
             return getNextToken();
         }
-        return {TokenType::DIVIDE, "/"};
+        return {TokenType::DIVIDE, "/", line, column};
     case '%':
+        column++;
         currentPos++;
-        return {TokenType::MODULO, "%"};
+        return {TokenType::MODULO, "%", line, column};
     case '(':
+        column++;
         currentPos++;
-        return {TokenType::LEFT_PAREN, "("};
+        return {TokenType::LEFT_PAREN, "(", line, column};
     case ')':
+        column++;
         currentPos++;
-        return {TokenType::RIGHT_PAREN, ")"};
+        return {TokenType::RIGHT_PAREN, ")", line, column};
     case '{':
+        column++;
         currentPos++;
-        return {TokenType::LEFT_BRACE, "{"};
+        return {TokenType::LEFT_BRACE, "{", line, column};
     case '}':
+        column++;
         currentPos++;
-        return {TokenType::RIGHT_BRACE, "}"};
+        return {TokenType::RIGHT_BRACE, "}", line, column};
     case '=':
+        column++;
         currentPos++;
 
         // Check for Equality Operator
         if (source[currentPos] == '=')
         {
+            column++;
             currentPos++;
-            return {TokenType::EQUAL, "=="};
+            return {TokenType::EQUAL, "==", line, column};
         }
-        return {TokenType::EQUAL, "="};
+        return {TokenType::EQUAL, "=", line, column};
     case '!':
+        column++;
         currentPos++;
 
         // Check for Not Equal Operator
         if (source[currentPos] == '=')
         {
+            column++;
             currentPos++;
-            return {TokenType::NOT_EQUAL, "!="};
+            return {TokenType::NOT_EQUAL, "!=", line, column};
         }
-        return {TokenType::NOT, "!"};
+        return {TokenType::NOT, "!", line, column};
     case '>':
+        column++;
         currentPos++;
 
         // Check for Greater than or Equal Operator
         if (source[currentPos] == '=')
         {
+            column++;
             currentPos++;
-            return {TokenType::GREATER_THAN_EQUAL, ">="};
+            return {TokenType::GREATER_THAN_EQUAL, ">=", line, column};
         }
-        return {TokenType::GREATER_THAN, ">"};
+        return {TokenType::GREATER_THAN, ">", line, column};
     case '<':
+        column++;
         currentPos++;
 
         // Check for Less than or Equal Operator
         if (source[currentPos] == '=')
         {
+            column++;
             currentPos++;
-            return {TokenType::LESS_THAN_EQUAL, "<="};
+            return {TokenType::LESS_THAN_EQUAL, "<=", line, column};
         }
         else if (source[currentPos] == '<')
         {
+            column++;
             currentPos++;
-            return {TokenType::PAREN, "<<"};
+            return {TokenType::PAREN, "<<", line, column};
         }
-        return {TokenType::LESS_THAN, "<"};
+        return {TokenType::LESS_THAN, "<", line, column};
     case '&':
+        column++;
         currentPos++;
 
         // Checks for Logical AND
         if (source[currentPos] == '&')
         {
+            column++;
             currentPos++;
-            return {TokenType::AND, "&&"};
+            return {TokenType::AND, "&&", line, column};
         }
-        return {TokenType::AND, "&"};
+        return {TokenType::AND, "&", line, column};
     case '|':
+        column++;
         currentPos++;
 
         // Checks for Logical OR
         if (source[currentPos] == '|')
         {
+            column++;
             currentPos++;
-            return {TokenType::OR, "||"};
+            return {TokenType::OR, "||", line, column};
         }
-        return {TokenType::OR, "|"};
+        return {TokenType::OR, "|", line, column};
     case ';':
+        column++;
         currentPos++;
-        return {TokenType::SEMICOLON, ";"};
+        return {TokenType::SEMICOLON, ";", line, column};
     case ',':
+        column++;
         currentPos++;
-        return {TokenType::COMMA, ","};
+        return {TokenType::COMMA, ",", line, column};
     case ':':
+        column++;
         currentPos++;
-        return {TokenType::COLON, ":"};
+        return {TokenType::COLON, ":", line, column};
     case '.':
+        column++;
         currentPos++;
-        return {TokenType::DOT, "."};
+        return {TokenType::DOT, ".", line, column};
     case '#':
+        column++;
         currentPos++;
 
         // Handle Comments Starting With # For Python
         while (currentPos < source.length() && source[currentPos] != '\n')
         {
+            column++;
             currentPos++;
         }
         return getNextToken();
@@ -177,6 +216,7 @@ Token Lexer::getNextToken()
     }
 
     // Handle Invalid Characters
+    column++;
     currentPos++;
     return {TokenType::INVALID, string(1, source[currentPos - 1])};
 }
@@ -194,20 +234,33 @@ Token Lexer::getIntegerToken()
     while (currentPos < source.length() && isdigit(source[currentPos]))
     {
         value += source[currentPos];
+        column++;
         currentPos++;
     }
+
+    // Check for Floating Point
     if (source[currentPos] == '.')
     {
         value += source[currentPos];
+        column++;
         currentPos++;
+
+        // Check for Decimal
+        if (!isdigit(source[currentPos]))
+        {
+            return {TokenType::INVALID, value, line, column};
+        }
+
+        // Get Decimal
         while (currentPos < source.length() && isdigit(source[currentPos]))
         {
             value += source[currentPos];
+            column++;
             currentPos++;
         }
-        return {TokenType::FLOAT, value};
+        return {TokenType::FLOAT, value, line, column};
     }
-    return {TokenType::NUMBER, value};
+    return {TokenType::NUMBER, value, line, column};
 }
 
 // Tokenize Identifiers and Keywords
@@ -217,52 +270,56 @@ Token Lexer::getIdentifierToken()
     while (currentPos < source.length() && (isalnum(source[currentPos]) || source[currentPos] == '_' || source[currentPos] == '$' || source[currentPos] == '.' || source[currentPos] == '!'))
     {
         value += source[currentPos];
+        column++;
         currentPos++;
     }
 
     // Checks for Keywords
     if (value == "if")
     {
-        return {TokenType::IF, value};
+        return {TokenType::IF, value, line, column};
     }
     if (value == "else")
     {
-        return {TokenType::ELSE, value};
+        return {TokenType::ELSE, value, line, column};
     }
     if (value == "while")
     {
-        return {TokenType::WHILE, value};
+        return {TokenType::WHILE, value, line, column};
     }
     if (value == "var" || value == "let" || value == "const" || value == "int")
     {
-        return {TokenType::VAR, value};
+        return {TokenType::VAR, value, line, column};
     }
     if (value == "print" || value == "println" || value == "println!" || value == "printf" || value == "echo" || value == "cout" || value == "log" || value == "console.log"  || value == "System.out.println") 
     {
-        return {TokenType::PRINT, value};
+        return {TokenType::PRINT, value, line, column};
     }
     if (value == "true")
     {
-        return {TokenType::BOOLEAN, value};
+        return {TokenType::BOOLEAN, value, line, column};
     }
     if (value == "false")
     {
-        return {TokenType::BOOLEAN, value};
+        return {TokenType::BOOLEAN, value, line, column};
     }
-    return {TokenType::IDENTIFIER, value};
+    return {TokenType::IDENTIFIER, value, line, column};
 }
 
 // Tokenize String Literals
 Token Lexer::getStringToken()
 {
     string value;
+    column++;
     currentPos++;
     while (currentPos < source.length() && source[currentPos] != '"')
     {
         value += source[currentPos];
+        column++;
         currentPos++;
     }
+    column++;
     currentPos++;
-    return {TokenType::STRING, value};
+    return {TokenType::STRING, value, line, column};
 }
 

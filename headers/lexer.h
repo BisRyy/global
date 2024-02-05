@@ -19,6 +19,8 @@ private:
 
     std::string source;
     int currentPos;
+    int line;
+    int column;
 };
 
 #endif // LEXEX_H

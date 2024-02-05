@@ -6,112 +6,112 @@
 void printToken(Token currentToken){
     switch (currentToken.type) {
         case TokenType::NUMBER:
-            cout << setw(20) << left << "NUMBER" << currentToken.value << endl;
+            cout << setw(12) << left << "NUMBER" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::FLOAT:
-            cout << setw(20) << left << "FLOAT" << currentToken.value << endl;
+            cout << setw(12) << left << "FLOAT" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::BOOLEAN:
-            cout << setw(20) << left << "BOOLEAN" << currentToken.value << endl;
+            cout << setw(12) << left << "BOOLEAN" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::IDENTIFIER:
-            cout << setw(20) << left << "IDENTIFIER" << currentToken.value << endl;
+            cout << setw(12) << left << "IDENTIFIER" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::STRING:
-            cout << setw(20) << left << "STRING" << currentToken.value << endl;
+            cout << setw(12) << left << "STRING" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::PLUS:
-            cout << setw(20) << left << "PLUS" << currentToken.value << endl;
+            cout << setw(12) << left << "PLUS" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::MINUS:
-            cout << setw(20) << left << "MINUS" << currentToken.value << endl;
+            cout << setw(12) << left << "MINUS" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::MULTIPLY:
-            cout << setw(20) << left << "MULTIPLY" << currentToken.value << endl;
+            cout << setw(12) << left << "MULTIPLY" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::DIVIDE:
-            cout << setw(20) << left << "DIVIDE" << currentToken.value << endl;
+            cout << setw(12) << left << "DIVIDE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::MODULO:
-            cout << setw(20) << left << "MODULO" << currentToken.value << endl;
+            cout << setw(12) << left << "MODULO" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::EQUAL:
-            cout << setw(20) << left << "EQUAL" << currentToken.value << endl;
+            cout << setw(12) << left << "EQUAL" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::NOT_EQUAL:  
-            cout << setw(20) << left << "NOT_EQUAL" << currentToken.value << endl;
+            cout << setw(12) << left << "NOT_EQUAL" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::GREATER_THAN:
-            cout << setw(20) << left << "GREATER_THAN" << currentToken.value << endl;
+            cout << setw(12) << left << "GREATER_THAN" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::LESS_THAN:
-            cout << setw(20) << left << "LESS_THAN" << currentToken.value << endl;
+            cout << setw(12) << left << "LESS_THAN" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::GREATER_THAN_EQUAL:
-            cout << setw(20) << left << "GREATER_THAN_EQUAL" << currentToken.value << endl;
+            cout << setw(12) << left << "GREATER_THAN_EQUAL" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::LESS_THAN_EQUAL:
-            cout << setw(20) << left << "LESS_THAN_EQUAL" << currentToken.value << endl;
+            cout << setw(12) << left << "LESS_THAN_EQUAL" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::AND:
-            cout << setw(20) << left << "AND" << currentToken.value << endl;
+            cout << setw(12) << left << "AND" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::OR:
-            cout << setw(20) << left << "OR" << currentToken.value << endl;
+            cout << setw(12) << left << "OR" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::NOT:
-            cout << setw(20) << left << "NOT" << currentToken.value << endl;
+            cout << setw(12) << left << "NOT" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::IF:
-            cout << setw(20) << left << "IF" << currentToken.value << endl;
+            cout << setw(12) << left << "IF" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::ELSE:
-            cout << setw(20) << left << "ELSE" << currentToken.value << endl;
+            cout << setw(12) << left << "ELSE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::WHILE:
-            cout << setw(20) << left << "WHILE" << currentToken.value << endl;
+            cout << setw(12) << left << "WHILE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::VAR:
-            cout << setw(20) << left << "VAR" << currentToken.value << endl;
+            cout << setw(12) << left << "VAR" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::DECLARE:
-            cout << setw(20) << left << "DECLARE" << currentToken.value << endl;
+            cout << setw(12) << left << "DECLARE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::PRINT:
-            cout << setw(20) << left << "PRINT" << currentToken.value << endl;
+            cout << setw(12) << left << "PRINT" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::LEFT_PAREN:
-            cout << setw(20) << left << "LEFT_PAREN" << currentToken.value << endl;
+            cout << setw(12) << left << "LEFT_PAREN" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::RIGHT_PAREN:
-            cout << setw(20) << left << "RIGHT_PAREN" << currentToken.value << endl;
+            cout << setw(12) << left << "RIGHT_PAREN" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::LEFT_BRACE:
-            cout << setw(20) << left << "LEFT_BRACE" << currentToken.value << endl;
+            cout << setw(12) << left << "LEFT_BRACE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::RIGHT_BRACE:
-            cout << setw(20) << left << "RIGHT_BRACE" << currentToken.value << endl;
+            cout << setw(12) << left << "RIGHT_BRACE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::END_OF_FILE:
-            cout << setw(20) << left << "END_OF_FILE" << currentToken.value << endl;
+            cout << setw(12) << left << "END_OF_FILE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::SEMICOLON:
-            cout << setw(20) << left << "SEMICOLON" << currentToken.value << endl;
+            cout << setw(12) << left << "SEMICOLON" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::COLON:
-            cout << setw(20) << left << "COLON" << currentToken.value << endl;
+            cout << setw(12) << left << "COLON" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::COMMA:
-            cout << setw(20) << left << "COMMA" << currentToken.value << endl;
+            cout << setw(12) << left << "COMMA" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         case TokenType::DOT:
-            cout << setw(20) << left << "DOT" << currentToken.value << endl;
+            cout << setw(12) << left << "DOT" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
         default:
             cerr << "\033[1;31m";
-            cerr << setw(20) << left << "INVALID TOKEN DETECTED: ";
+            cerr << setw(12) << left << "INVALID TOKEN DETECTED: ";
             cerr << "\033[0m";
-            cerr << currentToken.value << endl;
+            cerr << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
             break;
     }
 }
