@@ -53,7 +53,7 @@ int Parser::parseStatement()
                 }
                 else
                 {
-                    // cerr << "Error: Invalid print statement" << endl;
+                    cerr << "Error: Invalid print statement" << endl;
                     return 0;
                 }
             }
@@ -69,7 +69,7 @@ int Parser::parseStatement()
                 }
                 else
                 {
-                    // cerr << "Error: Invalid print statement" << endl;
+                    cerr << "Error: Invalid print statement" << endl;
                     return 0;
                 }
             }
@@ -109,23 +109,23 @@ int Parser::parseStatement()
                 // Check if Variable is Already Declared
                 if (variables.find(variableName) != variables.end())
                 {
-                    // cerr << "Warning: Variable '" << variableName << "' already declared" << endl;
+                    cerr << "Warning: Variable '" << variableName << "' already declared" << endl;
                 }
 
                 // Parse and Assign Value to Variable
                 int value = parseExpression();
                 variables[variableName] = value;
-                // cerr << "variable " << variableName << " declared with value " << value << endl;
+                clog << "variable " << variableName << " declared with value " << value << endl;
             }
             else
             {
-                // cerr << "Error: Invalid variable declaration" << endl;
+                cerr << "Error: Invalid variable declaration" << endl;
                 return 0;
             }
         }
         else
         {
-            // cerr << "Error: Invalid variable declaration" << endl;
+            cerr << "Error: Invalid variable declaration" << endl;
             return 0;
         }
     }
@@ -142,17 +142,17 @@ int Parser::parseStatement()
             // Check if Variable is Declared
             if (variables.find(variableName) == variables.end())
             {
-                // cerr << "Warning: Variable '" << variableName << "' not declared" << endl;
+                cerr << "Warning: Variable '" << variableName << "' not declared" << endl;
             }
 
             // Parse and Assign Value to the Variable
             int value = parseExpression();
             variables[variableName] = value;
-            // cerr << "variable " << variableName << " assigned value " << value << endl;
+            clog << "variable " << variableName << " assigned value " << value << endl;
         }
         else
         {
-            // cerr << "Error: Invalid variable assignment" << endl;
+            cerr << "Error: Invalid variable assignment" << endl;
             return 0;
         }
     }
@@ -189,7 +189,7 @@ int Parser::parseStatement()
             }
             else
             {
-                // cerr << "Error: Invalid if statement" << endl;
+                cerr << "Error: Invalid if statement" << endl;
                 return 0;
             }
         }
@@ -219,7 +219,7 @@ int Parser::parseStatement()
     }
     else
     {
-        // cerr << "Error: Invalid statement" << endl;
+        cerr << "Error: Invalid statement" << endl;
         return 0;
     }
     return 0;
@@ -342,7 +342,7 @@ int Parser::parseTerm()
             }
             else
             {
-                // cerr << "Error: Division by zero" << endl;
+                cerr << "Error: Division by zero" << endl;
                 return 0;
             }
         }
@@ -356,7 +356,7 @@ int Parser::parseTerm()
             }
             else
             {
-                // cerr << "Error: Modulo by zero" << endl;
+                cerr << "Error: Modulo by zero" << endl;
                 return 0;
             }
         }
@@ -381,7 +381,7 @@ int Parser::parseFactor()
         token = lexer.getNextToken();
         if (variables.find(variableName) == variables.end())
         {
-            // cerr << "Error: Variable '" << variableName << "' not declared" << endl;
+            cerr << "Error: Variable '" << variableName << "' not declared" << endl;
             return 0;
         }
         return variables[variableName];
@@ -409,7 +409,7 @@ int Parser::parseFactor()
         }
         else
         {
-            // cerr << "Error: Invalid expression" << endl;
+            cerr << "Error: Invalid expression" << endl;
             return 0;
         }
     }
@@ -422,7 +422,7 @@ int Parser::parseFactor()
     }
     else
     {
-        // cerr << "Error: Invalid expression" << endl;
+        cerr << "Error: Invalid expression" << endl;
         return 0;
     }
     return 0;
