@@ -25,3 +25,26 @@ void handleWarning(const string msg, int line, int column, bool abort) {
 void handleWarning(const string msg, int line, int column) {
     handleWarning(msg, line, column, false);
 }
+
+void handleLog(const string msg, int line, int column, bool abort) {
+    clog << "\033[34m";
+    clog << line << ":" << column << ": Log: " << msg << endl;
+    clog << "\033[0m";
+    if (abort) exit(EXIT_FAILURE);
+}
+
+void handleLog(const string msg, int line, int column) {
+    handleLog(msg, line, column, false);
+}
+
+void handlePrint(string msg){
+    cout << "\033[32m"; 
+    cout << msg << endl;
+    cout << "\033[0m"; 
+}
+
+void handlePrint(int msg){
+    cout << "\033[32m"; 
+    cout << msg << endl;
+    cout << "\033[0m"; 
+}
