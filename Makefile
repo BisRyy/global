@@ -2,7 +2,7 @@ main: clean lexer.o parser.o printToken.o error.o
 		g++ -o global lexer.o parser.o printToken.o error.o main.cpp
 		echo "COMPILATION SUCCESSFUL"
 
-lexer: lexer.o printToken.o
+lexer: clean lexer.o printToken.o
 		g++ -o lexer lexer.o printToken.o src/tokens.cpp
 
 parser: clean lexer.o printToken.o

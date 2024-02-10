@@ -21,13 +21,12 @@ int main( int argc, char* argv[] ) { // take file name as parameter
         return 1;
     }
 
-    string source;
+    string source((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
     string line;
-    while (getline(file, line)) {
-        Lexer lexer(line);
-        Parser parser(lexer);
-        int result = parser.parse();
-    }
+    Lexer lexer(source);
+    // Token currentToken = lexer.getNextToken();
+    Parser parser(lexer);
+    int result = parser.parse();
 
     return 0;
 }
