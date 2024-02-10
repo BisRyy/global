@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include "../headers/lexer.h"
 
@@ -13,7 +14,8 @@ int main( int argc, char *argv[] ) {
 
     // print the source code
     // cout << source << endl;
-    cout << endl;
+    cout << setw(12) << left << "TOKEN TYPE" << setw(15) << left << "VALUE" << " LINE   "<< " COLUMN    " << endl;
+    cout << "--------------------------------------" << endl;
 
     // tokenize the source code
     Lexer lexer(source);

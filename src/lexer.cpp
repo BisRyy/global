@@ -23,12 +23,12 @@ Token Lexer::getNextToken()
         if (source[currentPos] == '\n')
         {
             line++;
+            int temp = column;
             column = 0;
+            currentPos++;
+            return {TokenType::END_OF_LINE, "\\n", line, temp};
         }
-        else
-        {
             column++;
-        }
         currentPos++;
     }
 
@@ -204,7 +204,7 @@ Token Lexer::getNextToken()
     }
 
     // Tokenize Identifiers
-    if (isalpha(source[currentPos]) || source[currentPos] == '_' || source[currentPos] == '$')
+    if (isIdentifierCharacter(source[currentPos]))
     {
         return getIdentifierToken();
     }
@@ -219,6 +219,17 @@ Token Lexer::getNextToken()
     column++;
     currentPos++;
     return {TokenType::INVALID, string(1, source[currentPos - 1])};
+}
+
+// Tokenize Identifiers
+bool Lexer::isIdentifierCharacter(char c){
+    switch(c) {
+        case '_':
+        case '$':
+            return true;
+        default:
+            return isalpha(c);
+    }
 }
 
 // Check If a Character is Layout Character
