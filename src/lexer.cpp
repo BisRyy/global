@@ -26,7 +26,7 @@ Token Lexer::getNextToken()
             int temp = column;
             column = 0;
             currentPos++;
-            return {TokenType::END_OF_LINE, "\\n", line, temp};
+            return {TokenType::END_OF_LINE, "\\n", line - 1, temp + 1};
         }
             column++;
         currentPos++;

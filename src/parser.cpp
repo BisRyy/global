@@ -16,6 +16,7 @@ void printToken(Token currentToken);
 unordered_map<string, int> variables;
 
 Parser::Parser(Lexer &lexer) : lexer(lexer) {}
+Parser::Parser(Lexer &lexer, bool error, bool warning, bool log) : lexer(lexer), showError(error), showWarning(warning), showLog(log) {}
 
 // Start Parsing Process
 int Parser::parse()
@@ -56,7 +57,7 @@ int Parser::parseStatement()
                 }
                 else
                 {
-                    handleError("Invalid print statement", token.line, token.column);
+                    handleError("Invalid print statement", token.line, token.column, showError);
                     return 0;
                 }
             }
@@ -72,7 +73,7 @@ int Parser::parseStatement()
                 }
                 else
                 {
-                    handleError("Invalid print statement", token.line, token.column);
+                    handleError("Invalid print statement", token.line, token.column, showError);
                     return 0;
                 }
             }
@@ -112,23 +113,23 @@ int Parser::parseStatement()
                 // Check if Variable is Already Declared
                 if (variables.find(variableName) != variables.end())
                 {
-                    handleError("variable '" + variableName + "' already declared", token.line, token.column);
+                    handleError("variable '" + variableName + "' already declared", token.line, token.column, showError);
                 }
 
                 // Parse and Assign Value to Variable
                 int value = parseExpression();
                 variables[variableName] = value;
-                handleLog("Variable " + variableName + " declared with value ", token.line, token.column);
+                handleLog("Variable " + variableName + " declared with value ", token.line, token.column, showLog);
             }
             else
             {
-                handleError("Invalid variable declaration", token.line, token.column);
+                handleError("Invalid variable declaration", token.line, token.column, showError);
                 return 0;
             }
         }
         else
         {
-            handleError("Invalid variable declaration", token.line, token.column);
+            handleError("Invalid variable declaration", token.line, token.column, showError);
             return 0;
         }
     }
@@ -145,17 +146,17 @@ int Parser::parseStatement()
             // Check if Variable is Declared
             if (variables.find(variableName) == variables.end())
             {
-                handleWarning("variable '" + variableName + "' not declared", token.line, token.column);
+                handleWarning("variable '" + variableName + "' not declared", token.line, token.column, showWarning);
             }
 
             // Parse and Assign Value to the Variable
             int value = parseExpression();
             variables[variableName] = value;
-            handleLog("Variable " + variableName + " assigned value ", token.line, token.column);
+            handleLog("Variable " + variableName + " assigned value ", token.line, token.column, showLog);
         }
         else
         {
-            handleError("Invalid variable assignment", token.line, token.column);
+            handleError("Invalid variable assignment", token.line, token.column, showError);
             return 0;
         }
     }
@@ -192,7 +193,7 @@ int Parser::parseStatement()
             }
             else
             {
-                handleError("Invalid if statement", token.line, token.column);
+                handleError("Invalid if statement", token.line, token.column, showError);
                 return 0;
             }
         }
@@ -224,7 +225,7 @@ int Parser::parseStatement()
     {
         if (token.type != TokenType::END_OF_LINE)    
         {
-            handleError("Invalid statement ", token.line, token.column);
+            handleError("Invalid statement ", token.line, token.column, showError);
             return 0;
         }
     }

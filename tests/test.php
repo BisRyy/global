@@ -1,3 +1,4 @@
+<?php
 $x = 4;
 $y = 6;
 $z = 8;
@@ -10,19 +11,19 @@ $z = $x + $y;
 
 $a = $z + $y - ($x % $y) + ($x * $z) + ($y / 2) * ($x - $y * $z); // Another Comment
 
-echo ($a + $x + $y + $z); // prints -7938
+echo ($a + $x + $y + $z), "\n"; // prints -7938
 
-echo ($x + $y);  // prints 36
+echo ($x + $y), "\n";  // prints 36
 
 $result = 2 * ($x + $y);
 
-echo $result; // prints 72
+echo $result, "\n"; // prints 72
 
 $c = 7;
 
 $result = $x - $y * $c;
 
-echo $result; // prints -140
+echo $result, "\n"; // prints -140
 
 $a = 4;
 
@@ -30,11 +31,13 @@ $b = 2;
 
 $result = $a * $b;
 
-echo $result; // prints 8
+echo $result, "\n"; // prints 8
 
-echo "string";
+echo "string", "\n";
 
 // one liner if statement
 $test1 = 10;
 $test2 = 20;
-if($test1 + $test2 >= 20) echo "It's True!" else echo "It's not true!";
+if($test1 + $test2 >= 20) echo "It's True!", "\n"; else echo "It's not true!";
+
+?>
