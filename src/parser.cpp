@@ -160,7 +160,7 @@ int Parser::parseStatement()
             return 0;
         }
     }
-    // Implementation for If Statment
+    // Implementation for If Statement
     else if (token.type == TokenType::IF)
     {
         token = lexer.getNextToken();
