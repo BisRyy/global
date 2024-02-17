@@ -1,71 +1,42 @@
-program = { statement }
+program               ->   statement*
 
-statement = expression | print
+statement             ->   printStatement | varStatement | assignmentStatement | ifStatement
 
-print = 'print', '(', (expression ), ')'
+printStatement        ->   'print' ( expression | STRING ) ';'
 
-digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+varStatement          ->   'var' IDENTIFIER '=' expression ';'
 
-number = digit, { digit }
+assignmentStatement   ->   IDENTIFIER '=' expression ';'
 
-expression = term, { ('+' | '-'), term }
+ifStatement           ->   'if' '(' expression ')' statement ('else' statement)?
 
-term = factor, { ('*' | '/'), factor }
+expression            ->   logicalExpression
 
-factor = number | '(', expression, ')'
+logicalExpression     ->   relationalExpression ( ( 'AND' | 'OR' ) relationalExpression )*
 
-comment = '//', { character }, '\n'
+relationalExpression  ->   additiveExpression ( ( '<' | '>' | '<=' | '>=' | '==' | '!=' ) additiveExpression )*
 
+additiveExpression    ->   term ( ( '+' | '-' ) term )*
 
+term                  ->   factor ( ( '*' | '/' | '%' ) factor )*
 
+factor                ->   NUMBER | IDENTIFIER | BOOLEAN | STRING | '(' expression ')' | FLOAT
 
+NUMBER                ->   DIGIT+
 
-// Grammar:
+digit                 ->   '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
-// program = { statement }
+FLOAT                 ->   NUMBER '.' NUMBER
 
-// statement = expression | if | while | assignment | print | declaration | for
+BOOLEAN               ->   'true' | 'false'
 
-// print = 'print', '(', expression, ')' | 'print', '(', string, ')'
+STRING                ->   '"' CHARACTER* '"'
 
-// digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+IDENTIFIER            ->   LETTER ( LETTER | DIGIT )*
 
-// number = digit, { digit } 
+LETTER                ->   'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
 
-// float = number, '.', number 
+CHARACTER             ->   LETTER | DIGIT | SYMBOL
 
-// boolean = 'true' | 'false'
+comment               ->    [ '//' | '#' ] CHARACTER* '\n'
 
-// string = '"', { character }, '"'
-
-// character = letter | digit | symbol
-
-// letter = 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
-
-// identifier = letter, { letter | digit }
-
-// expression = logical_expr 
-
-// logical_expr = relational_expr, { ('&&' | '||'), relational_expr } | '!', logical_expr
-
-// relational_expr = additive_expr, { ('<' | '>' | '<=' | '>=' | '==' | '!='), additive_expr } 
-
-// additive_expr = term, { ('+' | '-'), term }
-
-// term = factor, { ('*' | '/' | '%'), factor }
-
-// factor = number | identifier | boolean | '(', expression, ')' | float
-
-// block = '{', { statement }, '}' | statement 
-
-// if =  'if', '(', expression, ')', block, [ 'else', block ] 
-
-// while = 'while', '(', expression, ')', block 
-
-// for = 'for', '(', [ assignment ], ';', [ expression ], ';', [ assignment ], ')', block | 'for', '(', [ declaration ], ';', [ expression ], ';', [ assignment ], ')', block
-
-// assignment = identifier, '=', expression 
-
-// declaration = 'var', identifier, '=', expression
-
-// comment = '//', { character }, '\n'

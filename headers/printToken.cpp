@@ -110,6 +110,9 @@ void printToken(Token currentToken){
         case TokenType::END_OF_LINE:
             cout << setw(12) << left << "END_OF_LINE" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl << endl;
             break;
+        case TokenType::PAREN:
+            cout << setw(12) << left << "PAREN" << setw(15) << left << currentToken.value << " LINE: "<< currentToken.line << " COLUMN: "<<currentToken.column << endl;
+            break;
         default:
             cerr << "\033[1;31m";
             cerr << setw(12) << left << "INVALID TOKEN DETECTED: ";

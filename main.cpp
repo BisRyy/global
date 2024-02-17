@@ -69,8 +69,11 @@ int main( int argc, char* argv[] ) { // take file name as parameter
 
     ifstream file(argv[1]);
     if (!file.is_open()) {
-        cerr << "Error: Unable to open file '" << argv[1] << "'" << endl;
-        return 1;
+        if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
+            showHelp(argv);
+        else
+            cerr << "Error: Unable to open file '" << argv[1] << "'" << endl;
+            return 1;
     }else{
         string fileExtension, fileName;
         size_t pos = string(argv[1]).find_last_of(".");

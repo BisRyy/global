@@ -1,4 +1,4 @@
-main: clean lexer.o parser.o printToken.o error.o
+main: clean lexer.o parser.o printToken.o error.o lexer
 		g++ -o global lexer.o parser.o printToken.o error.o main.cpp
 		echo "COMPILATION SUCCESSFUL"
 

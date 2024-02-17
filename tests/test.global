@@ -1,0 +1,55 @@
+# You can write your code here, don't bother about the language, we will take care of it.
+
+# Test Printing
+printf("Hello, world!");
+
+// Test Variable Declaration and Assignment
+var a = 5;
+var b = 7;
+c = a + b;
+console.log("Sum of a and b is:")
+echo c;
+
+// Test Arithmetic Operations
+let x = 10;
+int y = 3;
+var sum = x + y;
+var difference = x - y;
+const product = x * y;
+var quotient = x / y;
+let remainder = x % y;
+
+print("Arithmetic Operations:");
+println!("Sum:")
+System.out.println(sum);
+echo("Difference:")
+System.out.println(difference);
+print("Product:")
+System.out.println(product);
+print("Quotient:")
+System.out.println(quotient);
+print("Remainder:")
+System.out.println(remainder);
+
+// Test Logical Operations
+var p = true;
+var q = false;
+var logicalAnd = p && q;
+var logicalOr = p || q;
+var logicalNot = !p;
+
+cout << "Logical Operations:" << endl;
+print("Logical AND:")
+echo logicalAnd;
+print("Logical OR:")
+echo logicalOr;
+print("Logical NOT (p):")
+echo logicalNot;
+
+// Test If Statement
+var temperature = 25;
+if (temperature > 30) print("It's hot outside!"); else print("It's cool outside.");
+
+# Nested If Statement
+int time = 14;
+if (time < 12) print("Good morning!"); else print("Good afternoon!");
