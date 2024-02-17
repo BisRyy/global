@@ -23,15 +23,23 @@ git clone https://github.com/bisryy/global.git
 cd global
 ```
 Build the Compiler:
-
+*For Linux*
 ```
 make
+```
+*For Windows*
+```
+mingw32-make
 ```
 
 Run the Compiler:
 
 ```bash
-./global <source-file>
+./global <source-file> [options]
+```
+*Tokenizer*
+```bash
+./lexer <source-file>
 ```
 ##  Usage
 Once the compiler is built, you can use it to compile source files in different languages. For example:
@@ -40,6 +48,20 @@ Once the compiler is built, you can use it to compile source files in different 
 ./global tests/test.cpp
 ```
 This command will compile the C++ source file test.cpp.
+
+*Help*
+```bash
+$ ./global -h
+
+Usage: ./global <filename> [-e] [-w] [-log] [-a] [-l] [-h]
+Options:
+  -l, --line:    Compile Line by line
+  -e, --error:   Compile with errors
+  -w, --warning: Show warnings
+  -log:          Show logs
+  -a, -all:      Show all
+  -h, --help:    Show help
+```
 
 ## Example
 ```
